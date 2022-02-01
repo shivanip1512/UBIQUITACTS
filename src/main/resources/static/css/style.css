@@ -1,17 +1,25 @@
 body {
 	background: #e2e2e2 !important;
-	overflow: hidden;
 }
 
 .bg-primary {
 	background: #bb9cd9 !important;
 }
 
+.bg-warning {
+	background: #00bfff !important;
+}
+
 .banner {
 	width: 100%;
 	height: 102vh;
-	background: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url(../images/banner-img.jpg);
+	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+		url(../images/banner-img.jpg);
 	color: white;
 	background-size: cover;
 	margin-top: -9vh;
+}
+
+.my-card {
+	padding: 20px;
 }

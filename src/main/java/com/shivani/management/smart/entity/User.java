@@ -25,8 +25,17 @@ public class User {
 	private String email;
 	private String password;
 	private String role;
-	private Boolean active;
+	private boolean active;
 	private String imageUrl;
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
+				+ ", active=" + active + ", imageUrl=" + imageUrl + ", about=" + about + ", contacts=" + contacts + "]";
+	}
+
+	@Column(length = 500)
+	private String about;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Contact> contacts = new HashSet<>();
@@ -113,8 +122,6 @@ public class User {
 		this.about = about;
 	}
 
-	@Column(length = 500)
-	private String about;
 
 	public Set<Contact> getContacts() {
 		return contacts;
