@@ -18,4 +18,10 @@ public class HomeController {
 		model.addAttribute("pageTitle","About Us");
 		return "about";
 	}
+	
+	@GetMapping("/sign-up")
+	public String signUpHandler(Model model) {
+		model.addAttribute("pageTitle","Sign-up Page");
+		return "sign-up";
+	}
 }
