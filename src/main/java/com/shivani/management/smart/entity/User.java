@@ -12,6 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "USER")
@@ -20,9 +25,15 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
+	@NotBlank(message = "Name should not be blank")
+	@Size(min = 3, max = 30, message = "Characters between 3-30 required!")
 	private String name;
+
 	@Column(unique = true)
 	private String email;
+
+	@Pattern(regexp  = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}",message = "Please enter valid password!")
 	private String password;
 	private String role;
 	private boolean active;
@@ -121,7 +132,6 @@ public class User {
 	public void setAbout(String about) {
 		this.about = about;
 	}
-
 
 	public Set<Contact> getContacts() {
 		return contacts;

@@ -1,10 +1,12 @@
 package com.shivani.management.smart.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +42,7 @@ public class HomeController {
 	}
 
 	@PostMapping("/do_register")
-	public String registerUserHandler(@ModelAttribute("user") User user,
+	public String registerUserHandler(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
 			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model m,
 			HttpSession session) {
 		try {
@@ -48,6 +50,13 @@ public class HomeController {
 				System.out.println("You have not agreed to terms and conditions.");
 				throw new Exception("You have not agreed to terms and conditions.");
 			}
+
+			if (bindingResult.hasErrors()) {
+				System.out.println("Error in sign-up.. " + bindingResult);
+				m.addAttribute("user", user);
+				return "sign-up";
+			}
+
 			user.setRole("user");
 			user.setActive(true);
 
@@ -56,8 +65,9 @@ public class HomeController {
 
 			// pass new user obj to sign-up page
 			m.addAttribute("user", new User());
-			session.setAttribute("message", new Message(user.getName() + " registered successfully! ", "alert-success"));
-	
+			session.setAttribute("message",
+					new Message(user.getName() + " registered successfully! ", "alert-success"));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			m.addAttribute("user", user);

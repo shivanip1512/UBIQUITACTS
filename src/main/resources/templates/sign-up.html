@@ -47,15 +47,19 @@
 						<img style="width: 50px" class="mx-auto d-block"
 							src="/images/sign-up.png">
 						<h1 class="text-center">Signup here</h1>
-						<form action="" th:action="@{/do_register}" method="post"
-							th:object=${user}>
+
+						<form novalidate="novalidate" action=""
+							th:action="@{/do_register}" method="post" th:object=${user}>
 
 							<!-- name field -->
 							<div class="mb-3">
 								<label for="name_field" class="form-label">Name</label> <input
 									type="text" class="form-control" id="name_field" name="name"
+									th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
 									placeholder="Enter Full name" th:value="${user.name}"
 									required="required">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('name')}" th:text="${e}"></div>
 							</div>
 							<!-- email field -->
 							<div class="mb-3">
@@ -67,8 +71,17 @@
 							<!-- password field -->
 							<div class="mb-3">
 								<label for="password_field" class="form-label">Password</label>
-								<input type="password" class="form-control" id="password_field"
-									name="password" placeholder="Enter Password">
+								<div class="input-group">
+									<input type="password" name="password" class="form-control"
+										id="password_field"
+										th:classappend="${#fields.hasErrors('password')?'is-invalid':''}"
+										placeholder="Enter Password"> <span
+										class="input-group-text"> <i class="far fa-eye"
+										id="togglePassword" style="cursor: pointer"></i>
+									</span>
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
+								</div>
 							</div>
 							<!-- user-about field -->
 							<div class="form-group mb-2">
@@ -81,6 +94,7 @@
 								<input type="checkbox" name="agreement" class="form-check-input"
 									id="tnc_field"> <label class="mx-2 form-check-label"
 									for="tnc_field"> Accept terms and conditions</label>
+									
 							</div>
 							<div class="container text-center btn-group">
 								<button class="btn text-white" style="background: #40bf80">Submit</button>
