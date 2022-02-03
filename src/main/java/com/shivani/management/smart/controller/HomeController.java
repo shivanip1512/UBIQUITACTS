@@ -61,7 +61,7 @@ public class HomeController {
 				return "sign-up";
 			}
 
-			user.setRole("user");
+			user.setRole("ROLE_USER");
 			user.setActive(true);
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
