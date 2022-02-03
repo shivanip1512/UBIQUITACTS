@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,9 @@ public class HomeController {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/")
 	public String homeHandler(Model model) {
@@ -59,6 +63,7 @@ public class HomeController {
 
 			user.setRole("user");
 			user.setActive(true);
+			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
 			// insert user in db
 			User result = this.userRepository.save(user);
