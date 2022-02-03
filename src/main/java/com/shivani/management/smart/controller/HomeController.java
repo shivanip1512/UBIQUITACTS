@@ -79,6 +79,12 @@ public class HomeController {
 			session.setAttribute("message", new Message("Something went Wrong! " + e.getMessage(), "alert-danger"));
 		}
 		return "sign-up";
-
+	}
+	
+	//handler for custom login
+	@GetMapping("/sign-in")
+	public String loginHandler(Model model) {
+		model.addAttribute("pageTitle", "Login Page");
+		return "login";
 	}
 }

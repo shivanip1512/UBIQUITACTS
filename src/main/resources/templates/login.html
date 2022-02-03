@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Login</title>
+</head>
+<body>
+	<section>
+
+		<div class="container">
+			<div class="row  mt-4 align-items-center"
+				style="padding-top: 10% !important;">
+				<!-- For Demo Purpose -->
+				<div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+					<img
+						src="https://bootstrapious.com/i/snippets/sn-registeration/illustration.svg"
+						alt="" class="img-fluid mb-3 d-none d-md-block">
+				</div>
+
+				<!-- Registeration Form -->
+				<div class="col-md-7 col-lg-6 ml-auto">
+					<div class="row">
+
+						<div class="col-md-8 offset-md-2">
+							<!-- name field -->
+							<div class="mb-3">
+								<label for="name_field" class="form-label">Name</label> <input
+									type="text" class="form-control" id="name_field" name="name"
+									placeholder="Enter Full name" required="required">
+								<div class="invalid-feedback"></div>
+							</div>
+							<!-- password field -->
+							<div class="mb-3">
+								<label for="password_field" class="form-label">Password</label>
+								<div class="input-group">
+									<input type="password" name="password" class="form-control"
+										id="password_field" placeholder="Enter Password"> <span
+										class="input-group-text"> <i class="far fa-eye"
+										id="togglePassword" style="cursor: pointer"></i>
+									</span>
+									<div class="invalid-feedback"></div>
+								</div>
+							</div>
+							<div class="input-group d-flex justify-content-between">
+								<span
+									style="width: 48%; text-align: left; display: inline-block;"><a
+									class="small-text" href="#">Forgot password?</a></span>
+								<button type="submit" style="border-radius: 6px"
+									class="btn bg-primary float-right">Sign In</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+</body>
+</html>
