@@ -33,23 +33,23 @@ public class User {
 	@Column(unique = true)
 	private String email;
 
-	@Pattern(regexp  = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}",message = "Please enter valid password!")
+	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}", message = "Please enter valid password!")
 	private String password;
 	private String role;
 	private boolean active;
 	private String imageUrl;
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
-				+ ", active=" + active + ", imageUrl=" + imageUrl + ", about=" + about + ", contacts=" + contacts + "]";
-	}
-
 	@Column(length = 500)
 	private String about;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Contact> contacts = new HashSet<>();
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<Contact> contact = new HashSet<>();
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
+				+ ", active=" + active + ", imageUrl=" + imageUrl + ", about=" + about + ", contacts=" + contact + "]";
+	}
 
 	public User(int id, String name, String email, String password, String role, Boolean active, String imageUrl,
 			String about) {
@@ -134,11 +134,11 @@ public class User {
 	}
 
 	public Set<Contact> getContacts() {
-		return contacts;
+		return contact;
 	}
 
 	public void setContacts(Set<Contact> contacts) {
-		this.contacts = contacts;
+		this.contact = contacts;
 	}
 
 }

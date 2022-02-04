@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="base::layout(~{::section})">
+	th:replace="normal/userBase::layout(~{::section})">
 <head>
 <meta charset="UTF-8" />
 <title>User Dashboard</title>
+<link rel="stylesheet" th:href="@{css/style.css}" />
 </head>
 <body>
 	<section>
-		<h1>Welcome user!</h1>
+		<h1>Welcome <span th:text="${user.name}"></span>!</h1>
 		<h1>This is your private dashboard</h1>
 	</section>
+
 </body>
 </html>

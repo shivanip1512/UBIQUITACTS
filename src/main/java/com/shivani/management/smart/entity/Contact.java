@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "contact")
 public class Contact {
 
 	@Id
@@ -20,7 +22,7 @@ public class Contact {
 	@Column(unique = true)
 	private String phone;
 	private String image;
-	@Column(length = 50000)
+	@Column(length = 10000)
 	private String description;
 
 	@ManyToOne
