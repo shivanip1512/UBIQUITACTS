@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 	th:replace="base::layout(~{::section})">
 <head>
 <meta charset="UTF-8" />
@@ -23,32 +23,42 @@
 					<div class="row">
 
 						<div class="col-md-8 offset-md-2">
-							<!-- name field -->
-							<div class="mb-3">
-								<label for="name_field" class="form-label">Name</label> <input
-									type="text" class="form-control" id="name_field" name="name"
-									placeholder="Enter Full name" required="required">
-								<div class="invalid-feedback"></div>
-							</div>
-							<!-- password field -->
-							<div class="mb-3">
-								<label for="password_field" class="form-label">Password</label>
-								<div class="input-group">
-									<input type="password" name="password" class="form-control"
-										id="password_field" placeholder="Enter Password"> <span
-										class="input-group-text"> <i class="far fa-eye"
-										id="togglePassword" style="cursor: pointer"></i>
-									</span>
+							<form action="" th:action="@{sign-in}" method="post">
+								<h3 class="mb-4">Login here</h3>
+
+								<div th:if="${param.error}" class="alert alert-danger">
+									Invalid Credentials</div>
+								<div th:if="${param.logout}" class="alert alert-success">
+									You have been logged out!</div>
+
+								<!-- name field -->
+								<div class="mb-3">
+									<label for="name_field" class="form-label">Name</label> <input
+										type="text" class="form-control" id="name_field"
+										name="username" placeholder="Enter Full name"
+										required="required">
 									<div class="invalid-feedback"></div>
 								</div>
-							</div>
-							<div class="input-group d-flex justify-content-between">
-								<span
-									style="width: 48%; text-align: left; display: inline-block;"><a
-									class="small-text" href="#">Forgot password?</a></span>
-								<button type="submit" style="border-radius: 6px"
-									class="btn bg-primary float-right">Sign In</button>
-							</div>
+								<!-- password field -->
+								<div class="mb-3">
+									<label for="password_field" class="form-label">Password</label>
+									<div class="input-group">
+										<input type="password" name="password" class="form-control"
+											id="password_field" placeholder="Enter Password"> <span
+											class="input-group-text"> <i class="far fa-eye"
+											id="togglePassword" style="cursor: pointer"></i>
+										</span>
+										<div class="invalid-feedback"></div>
+									</div>
+								</div>
+								<div class="input-group d-flex justify-content-between">
+									<span
+										style="width: 48%; text-align: left; display: inline-block;"><a
+										class="small-text" href="#">Forgot password?</a></span>
+									<button type="submit" style="border-radius: 6px"
+										class="btn bg-primary float-right">Sign In</button>
+								</div>
+							</form>
 						</div>
 
 					</div>
