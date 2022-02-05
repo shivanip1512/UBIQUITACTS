@@ -9,6 +9,10 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolationException;
+import javax.websocket.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shivani.management.smart.dao.UserRepository;
 import com.shivani.management.smart.entity.Contact;
 import com.shivani.management.smart.entity.User;
+import com.shivani.management.smart.helper.Message;
 
 @Controller
 @RequestMapping("/user")
@@ -58,11 +63,10 @@ public class UserController {
 
 	@PostMapping("/process-contact")
 	public String processAddContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file,
-			Model model, Principal principal) {
+			Model model, Principal principal, HttpSession httpSession) {
 		try {
 
 			System.out.println("contact : " + contact);
-			model.addAttribute("contact", contact);
 			User user = (User) model.getAttribute("user");
 
 			/* processing and uploading file */
@@ -83,10 +87,20 @@ public class UserController {
 
 			System.out.println("user : " + user);
 			this.repository.save(user);
+			httpSession.setAttribute("message",
+					new Message(contact.getName() + " added successfully!", "alert-success"));
+			model.addAttribute("contact", new Contact());
 
+		}catch (ConstraintViolationException e) {
+			System.out.println("ERROR : " + e.getMessage());
+			e.printStackTrace();
+			model.addAttribute("contact", contact);
+			httpSession.setAttribute("message", new Message("Please Check field values! ", "alert-danger"));
 		} catch (Exception e) {
 			System.out.println("ERROR : " + e.getMessage());
 			e.printStackTrace();
+			model.addAttribute("contact", contact);
+			httpSession.setAttribute("message", new Message("Something went Wrong! " + e.getMessage(), "alert-danger"));
 		}
 		return "normal/add_contact_form";
 	}
