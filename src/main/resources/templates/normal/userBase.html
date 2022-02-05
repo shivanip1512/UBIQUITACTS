@@ -52,7 +52,8 @@
 				<ul class="navbar-nav ml-auto text-uppercase">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"></a> <!-- th:text="${user.name}"  -->
+					<li class="nav-item"><a class="nav-link"
+						th:text="${user.name}" href="#"></a>
 					<li sec:authorize="isAuthenticated()" class="nav-item"><a
 						class="nav-link" href="/logout">Logout</a></li>
 				</ul>
