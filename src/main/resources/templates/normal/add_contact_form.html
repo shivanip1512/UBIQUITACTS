@@ -74,8 +74,8 @@
 								</div>
 
 								<!-- contact description -->
-								<div class="input-group mb-4">
-									<textarea rows="10" cols="" name="description" id="description"
+								<div class="form-group mb-4">
+									<textarea rows="15" cols="" name="description" id="mytextarea"
 										class="form-control" th:value="${contact.description}"
 										placeholder="Enter contact description here"></textarea>
 								</div>
@@ -91,6 +91,18 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- tiny MCE editor -->
+		<script
+			src="https://cdn.tiny.cloud/1/13kgozbuzko3y6seqfqefcw36vt96bf2z8w0higktc764u1q/tinymce/5/tinymce.min.js"
+			referrerpolicy="origin"></script>
+		<script>
+			tinymce.init({
+				selector : '#mytextarea'
+			});
+		</script>
+
+
 	</section>
 </body>
 </html>
