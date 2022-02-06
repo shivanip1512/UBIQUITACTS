@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/userBase::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>User Dashboard</title>
+<link rel="stylesheet" th:href="@{css/style.css}" />
+</head>
+<body>
+
+	<!-- no result found page -->
+	<div th:fragment="noResultSection">
+		
+		<div class="container">
+		<img alt="" src="" th:src="@{/images/no-results-found.png}">
+		</div>
+		
+	</div>
+</body>
+</html>

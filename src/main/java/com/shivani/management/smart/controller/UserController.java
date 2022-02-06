@@ -8,22 +8,27 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.shivani.management.smart.dao.ContactRepository;
 import com.shivani.management.smart.dao.UserRepository;
 import com.shivani.management.smart.entity.Contact;
 import com.shivani.management.smart.entity.User;
@@ -34,7 +39,9 @@ import com.shivani.management.smart.helper.Message;
 public class UserController {
 
 	@Autowired
-	private UserRepository repository;
+	private UserRepository userRepository;
+	@Autowired
+	private ContactRepository contactRepository;
 
 	/* executes each time */
 	@ModelAttribute
@@ -42,7 +49,7 @@ public class UserController {
 		String name = principal.getName(); // System.out.println("username : "+name);
 
 		/* get user by username */
-		User user = repository.getUserByUserName(name);
+		User user = userRepository.getUserByUserName(name);
 		model.addAttribute("user", user);
 		System.out.println("user : " + user);
 	}
@@ -86,12 +93,12 @@ public class UserController {
 			contact.setUser(user);
 
 			System.out.println("user : " + user);
-			this.repository.save(user);
+			this.userRepository.save(user);
 			httpSession.setAttribute("message",
 					new Message(contact.getName() + " added successfully!", "alert-success"));
 			model.addAttribute("contact", new Contact());
 
-		}catch (ConstraintViolationException e) {
+		} catch (ConstraintViolationException e) {
 			System.out.println("ERROR : " + e.getMessage());
 			e.printStackTrace();
 			model.addAttribute("contact", contact);
@@ -103,5 +110,28 @@ public class UserController {
 			httpSession.setAttribute("message", new Message("Something went Wrong! " + e.getMessage(), "alert-danger"));
 		}
 		return "normal/add_contact_form";
+	}
+
+	@GetMapping("/show-contacts/{page}")
+	public String showContactsHandler(@PathVariable("page") Integer page, Model model) {
+		model.addAttribute("pageTitle", "Contacts");
+
+		// list of contacts of logged in user
+		User user = (User) model.getAttribute("user");
+
+		// pagination
+		// records per page - 5(n),
+		// current page index - 0(page)
+		Pageable pageRequest = PageRequest.of(page, 2);
+		Page<Contact> contactsOfLoggedInUser = this.contactRepository.findContactsByUser(user.getId(), pageRequest);
+
+		model.addAttribute("contacts", contactsOfLoggedInUser);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", contactsOfLoggedInUser.getTotalPages());
+
+		System.out.println("toatl :" + contactsOfLoggedInUser.getTotalPages());
+		System.out.println("currentPage :" + page);
+
+		return "normal/show_contacts";
 	}
 }

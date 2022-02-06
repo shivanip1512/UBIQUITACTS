@@ -1,6 +1,7 @@
 const togglePassword = document.querySelector("#togglePassword");
 const password = document.querySelector("#password_field");
 
+if(togglePassword){
 togglePassword.addEventListener("click", function() {
 
 	// toggle the type attribute
@@ -10,3 +11,17 @@ togglePassword.addEventListener("click", function() {
 	this.classList.toggle('fa-eye');
 	this.classList.toggle('fa-eye-slash');
 });
+}
+
+const toggleSideBar = () => {
+	const sidebar = $('.sidebar');
+	if (sidebar.is(":visible")) {
+		sidebar.css("display", "none");
+		$(".content").css("margin-left", "unset");
+		//$(".menuBar").css("display", "block");
+	} else {
+		sidebar.css("display", "block");
+		$(".content").css("margin-left", "20%");
+	//	$(".menuBar").css("display", "none");
+	}
+};
