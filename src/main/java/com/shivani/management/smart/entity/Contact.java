@@ -13,6 +13,27 @@ import javax.persistence.Table;
 @Table(name = "contact")
 public class Contact {
 
+	@Override
+	public String toString() {
+		return "Contact [cId=" + cId + ", email=" + email + ", phone=" + phone + "]";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (o == this) {
+			return true;
+		}
+
+		if (!(o instanceof Contact)) {
+			return false;
+		}
+
+		Contact c = (Contact) o;
+
+		return Integer.compare(cId, c.cId) == 0;
+	}
+
 	/*
 	 * @Override public String toString() { return "Contact [cId=" + cId + ", name="
 	 * + name + ", nickName=" + nickName + ", work=" + work + ", email=" + email +

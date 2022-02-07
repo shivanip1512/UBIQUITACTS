@@ -26,6 +26,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <link rel="stylesheet" th:href="@{/css/style.css}" />
 <title th:text="${pageTitle}"></title>
@@ -65,10 +66,12 @@
 	<!-- sidebar -->
 	<div class="sidebar">
 		<i class="fas fa-times crossBtn" onclick="toggleSideBar()"></i> <a
-			th:href="@{/user/dashboard}" href="" class="item"><i class="fas fa-home"></i>
-			Home</a> <a href="#" class="item"><i class="fas fa-user-circle"></i>
-			My Profile</a> <a th:href="@{/user/show-contacts/0}" class="item"><i class="fas fa-id-card-alt"></i>
-			View Contacts</a> <a th:href="@{/user/add-contact}" href="" class="item"><i
+			th:href="@{/user/dashboard}" href="" class="item"><i
+			class="fas fa-home"></i> Home</a> <a href="#" class="item"><i
+			class="fas fa-user-circle"></i> My Profile</a> <a
+			th:href="@{/user/show-contacts/0}" class="item"><i
+			class="fas fa-id-card-alt"></i> View Contacts</a> <a
+			th:href="@{/user/add-contact}" href="" class="item"><i
 			class="fas fa-user-plus"></i> Add Contacts</a> <a href="#" class="item"><i
 			class="fas fa-user-cog"></i> Settings</a> <a href="/logout" class="item"><i
 			class="fas fa-sign-out-alt"></i> Logout</a>

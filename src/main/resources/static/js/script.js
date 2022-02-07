@@ -1,16 +1,16 @@
 const togglePassword = document.querySelector("#togglePassword");
 const password = document.querySelector("#password_field");
 
-if(togglePassword){
-togglePassword.addEventListener("click", function() {
+if (togglePassword) {
+	togglePassword.addEventListener("click", function() {
 
-	// toggle the type attribute
-	const type = password.getAttribute("type") === "password" ? "text" : "password";
-	password.setAttribute("type", type);
-	// toggle the eye icon
-	this.classList.toggle('fa-eye');
-	this.classList.toggle('fa-eye-slash');
-});
+		// toggle the type attribute
+		const type = password.getAttribute("type") === "password" ? "text" : "password";
+		password.setAttribute("type", type);
+		// toggle the eye icon
+		this.classList.toggle('fa-eye');
+		this.classList.toggle('fa-eye-slash');
+	});
 }
 
 const toggleSideBar = () => {
@@ -22,6 +22,24 @@ const toggleSideBar = () => {
 	} else {
 		sidebar.css("display", "block");
 		$(".content").css("margin-left", "20%");
-	//	$(".menuBar").css("display", "none");
+		//	$(".menuBar").css("display", "none");
 	}
 };
+
+const deleteContact = (cId) => {
+	swal({
+		title: "Are you sure?",
+		text: "Once deleted, you will not be able to recover this Contact!",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				window.location = "/user/delete-contact/" + cId;
+			} else {
+				swal("Your Contact is safe!");
+			}
+		});
+}
+

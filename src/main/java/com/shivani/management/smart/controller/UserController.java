@@ -9,9 +9,11 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -51,7 +53,7 @@ public class UserController {
 		/* get user by username */
 		User user = userRepository.getUserByUserName(name);
 		model.addAttribute("user", user);
-		System.out.println("user : " + user);
+//		System.out.println("user : " + user);
 	}
 
 	@RequestMapping("/dashboard")
@@ -92,7 +94,6 @@ public class UserController {
 			user.getContacts().add(contact);
 			contact.setUser(user);
 
-			System.out.println("user : " + user);
 			this.userRepository.save(user);
 			httpSession.setAttribute("message",
 					new Message(contact.getName() + " added successfully!", "alert-success"));
@@ -129,9 +130,6 @@ public class UserController {
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", contactsOfLoggedInUser.getTotalPages());
 
-		System.out.println("toatl :" + contactsOfLoggedInUser.getTotalPages());
-		System.out.println("currentPage :" + page);
-
 		return "normal/show_contacts";
 	}
 
@@ -155,6 +153,27 @@ public class UserController {
 			model.addAttribute("pageTitle", "404 : Page Not Found");
 			return "page_not_found.html";
 		}
+	}
 
+	@GetMapping("/delete-contact/{cId}")
+	public String deleteContactHandler(@PathVariable("cId") Integer cId, Model model, HttpSession session) {
+		User user = (User) model.getAttribute("user");
+		Contact contact = this.contactRepository.findById(cId).get();
+
+		System.out.println("user :" + user);
+		System.out.println("contact :" + contact);
+
+		boolean match = user.getContacts().stream().anyMatch(c -> contact.equals(c));
+		if (match) {
+			// delete image of contact
+			
+			
+			// delete entry in db
+			contact.setUser(null);
+			this.contactRepository.delete(contact);
+			session.setAttribute("message", new Message("Contact deleted Successfully !", "alert-success"));
+		}
+
+		return "redirect:/user/show-contacts/0";
 	}
 }
