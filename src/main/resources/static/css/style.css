@@ -10,6 +10,10 @@ body {
 	background: #00bfff !important;
 }
 
+.bg-delete {
+	background: #f78f66 !important;
+}
+
 .banner {
 	width: 100%;
 	height: 102vh;
@@ -99,7 +103,7 @@ body {
 	height: 350px !important;
 	object-fit: cover;
 	border-radius: 50%;
-	background-color: lightgreen;
+	background-color: lightgrey;
 }
 
 .page-item.active .page-link {
@@ -117,24 +121,29 @@ table {
 
 .table.contact_details {
 	margin-right: 25%;
-    margin-left: 45%;
-    width: 22%!important;
-    text-align: left;
-    padding: unset;
+	margin-left: 45%;
+	width: 22% !important;
+	text-align: left;
+	padding: unset;
 }
 
-.contact_details td{
-	padding: unset!important;
+.contact_details td {
+	padding: unset !important;
 }
 
-.fa-quote-left{
+.fa-quote-left {
 	padding-right: 100%;
 }
 
-.fa-quote-right{
+.fa-quote-right {
 	padding-left: 97%;
 }
 
-.description{
+.description {
 	width: 50%;
+}
+
+.contact_action {
+	padding-left: 17%;
+	padding-right: 17%;
 }

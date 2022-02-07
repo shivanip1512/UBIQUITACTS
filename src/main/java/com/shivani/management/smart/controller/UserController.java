@@ -137,15 +137,24 @@ public class UserController {
 
 	@GetMapping("/{cId}/contact-details")
 	public String showContactDetails(@PathVariable("cId") Integer cId, Model model) {
-		System.out.println("cid :"+cId);
-		
+		System.out.println("cid :" + cId);
+
+		User user = (User) model.getAttribute("user");
+
 		Optional<Contact> contactOptional = this.contactRepository.findById(cId);
 		Contact contact = contactOptional.get();
-		
-		String contactName = contact.getName().split(" ")[0];
-		model.addAttribute("pageTitle", contactName+"'s Details");
-		model.addAttribute("contact", contact);
 
-		return "normal/show_contact_details";
+		if (user.getId() == contact.getUser().getId()) {
+
+			String contactName = contact.getName().split(" ")[0];
+			model.addAttribute("pageTitle", contactName + "'s Details");
+			model.addAttribute("contact", contact);
+
+			return "normal/show_contact_details";
+		} else {
+			model.addAttribute("pageTitle", "404 : Page Not Found");
+			return "page_not_found.html";
+		}
+
 	}
 }
