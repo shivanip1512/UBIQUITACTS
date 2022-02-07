@@ -86,3 +86,55 @@ body {
 	background: rgba(0, 0, 0, 0);
 	border: none;
 }
+
+.contacts_photo {
+	width: 35px;
+	height: 35px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.contacts_photo.profile_view {
+	width: 350px !important;
+	height: 350px !important;
+	object-fit: cover;
+	border-radius: 50%;
+	background-color: lightgreen;
+}
+
+.page-item.active .page-link {
+	background-color: #2197C4;
+	border-color: #2197C4;
+}
+
+* {
+	font-family: opensans, sans-serif, arial;
+}
+
+table {
+	text-align: center;
+}
+
+.table.contact_details {
+	margin-right: 25%;
+    margin-left: 45%;
+    width: 22%!important;
+    text-align: left;
+    padding: unset;
+}
+
+.contact_details td{
+	padding: unset!important;
+}
+
+.fa-quote-left{
+	padding-right: 100%;
+}
+
+.fa-quote-right{
+	padding-left: 97%;
+}
+
+.description{
+	width: 50%;
+}

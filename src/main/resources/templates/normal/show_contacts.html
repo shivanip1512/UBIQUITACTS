@@ -17,12 +17,13 @@
 
 				<h1 class="text-center mb-3">My Contacts</h1>
 
-				<div class="container" th:if="${totalPages !=0 && currentPage<totalPages}">
+				<div class="container"
+					th:if="${totalPages !=0 && currentPage<totalPages}">
 					<div class="container bg-light">
 						<table class="table contact_list">
 							<thead>
 								<tr>
-									<th scope="col">#ID</th>
+									<th scope="col">User ID</th>
 									<th scope="col">Name</th>
 									<th scope="col">Email</th>
 									<th scope="col">Phone</th>
@@ -31,9 +32,17 @@
 							</thead>
 							<tbody>
 								<tr th:each="c : ${contacts}">
-									<th th:text="${'C'+c.cId}" scope="row">1</th>
+									<th scope="row"><img th:if="${c.image}"
+										alt="profile photo" class="contacts_photo"
+										th:src="@{'/images/contact/'+${c.image}}"> <img
+										th:unless="${c.image}" alt="profile photo"
+										class="contacts_photo" src="/images/default_profile_photo.png">
+										<span th:text="${'C'+c.cId}"></span></th>
 									<td th:text="${c.name}">Mark</td>
-									<td th:text="${c.email}">abc@xyz.com</td>
+									<td><a
+										th:href="@{'/user/'+${c.cId}+'/contact-details'}"> <span
+											th:text="${c.email}"></span>
+									</a></td>
 									<td th:text="${c.phone}">+919123456789</td>
 									<td>
 										<div class="container">

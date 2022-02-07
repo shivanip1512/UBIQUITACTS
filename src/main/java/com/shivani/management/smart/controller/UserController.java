@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
@@ -122,7 +122,7 @@ public class UserController {
 		// pagination
 		// records per page - 5(n),
 		// current page index - 0(page)
-		Pageable pageRequest = PageRequest.of(page, 2);
+		Pageable pageRequest = PageRequest.of(page, 5);
 		Page<Contact> contactsOfLoggedInUser = this.contactRepository.findContactsByUser(user.getId(), pageRequest);
 
 		model.addAttribute("contacts", contactsOfLoggedInUser);
@@ -133,5 +133,19 @@ public class UserController {
 		System.out.println("currentPage :" + page);
 
 		return "normal/show_contacts";
+	}
+
+	@GetMapping("/{cId}/contact-details")
+	public String showContactDetails(@PathVariable("cId") Integer cId, Model model) {
+		System.out.println("cid :"+cId);
+		
+		Optional<Contact> contactOptional = this.contactRepository.findById(cId);
+		Contact contact = contactOptional.get();
+		
+		String contactName = contact.getName().split(" ")[0];
+		model.addAttribute("pageTitle", contactName+"'s Details");
+		model.addAttribute("contact", contact);
+
+		return "normal/show_contact_details";
 	}
 }
