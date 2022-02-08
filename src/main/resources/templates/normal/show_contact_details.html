@@ -13,12 +13,15 @@
 
 					<div th:replace="alert::alertSection"></div>
 
+					<div class="img-wrap">
+						<img th:if="${contact.image}"
+							class="contacts_photo profile_view mb-3" alt="profile photo"
+							th:src="@{'/images/contact/'+${contact.image}}"> <img
+							th:unless="${contact.image}" class="contacts_photo profile_view"
+							alt="profile photo" src="/images/default_profile_photo.png">
+						<a href="#" th:onclick="|deleteImg(${contact.cId})|"  class="fas fa-trash-alt deleteImg" style="margin-right: 6px;"></a>
+					</div>
 
-					<img th:if="${contact.image}"
-						class="contacts_photo profile_view mb-3" alt="profile photo"
-						th:src="@{'/images/contact/'+${contact.image}}"> <img
-						th:unless="${contact.image}" class="contacts_photo profile_view"
-						alt="profile photo" src="/images/default_profile_photo.png">
 					<h2>
 						<span th:text="${contact.name}"></span> (<span
 							th:text="${contact.nickName}"></span>)

@@ -18,11 +18,9 @@ const toggleSideBar = () => {
 	if (sidebar.is(":visible")) {
 		sidebar.css("display", "none");
 		$(".content").css("margin-left", "unset");
-		//$(".menuBar").css("display", "block");
 	} else {
 		sidebar.css("display", "block");
 		$(".content").css("margin-left", "20%");
-		//	$(".menuBar").css("display", "none");
 	}
 };
 
@@ -46,4 +44,21 @@ const deleteContact = (cId) => {
 
 const updateContact = (cId) => {
 	window.location = "/user/update-contact/" + cId;
+}
+
+const deleteImg = (cId) => {
+
+	swal({
+		title: "Are you sure?",
+		text: "Once deleted, you will not be able to recover this Image!",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				window.location = "/user/contact/delete-image/" + cId;
+			}
+		});
+
 }

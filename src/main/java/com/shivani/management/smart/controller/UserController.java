@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
 import javax.websocket.Session;
@@ -115,8 +116,8 @@ public class UserController {
 			Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + imgName);
 			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			System.out.println("Image uploaded..");
-		} 
-		//incase user has profile pic and he updates his profile
+		}
+		// incase user has profile pic and he updates his profile
 		else if (contact.getImage() == null) {
 			String image = this.contactRepository.findById(contact.getcId()).get().getImage();
 			contact.setImage(image);
@@ -238,6 +239,23 @@ public class UserController {
 				model.addAttribute("contact", contact);
 				session.setAttribute("message", new Message("Something went Wrong! " + e.getMessage(), "alert-danger"));
 			}
+		}
+
+		return "redirect:/user/" + contact.getcId() + "/contact-details";
+	}
+
+	@GetMapping("/contact/delete-image/{cId}")
+	public String deleteContactImageHandler(@PathVariable("cId") Integer cId, Model model, HttpSession session) {
+		Contact contact = this.contactRepository.findById(cId).get();
+		try {
+			deleteContactProfilePhoto(contact);
+			this.contactRepository.save(contact);
+			session.setAttribute("message", new Message("Photo deleted Successfully !", "alert-success"));
+		} catch (IOException e) {
+			System.out.println("ERROR : " + e.getMessage());
+			e.printStackTrace();
+			model.addAttribute("contact", contact);
+			session.setAttribute("message", new Message("Something went Wrong! " + e.getMessage(), "alert-danger"));
 		}
 
 		return "redirect:/user/" + contact.getcId() + "/contact-details";

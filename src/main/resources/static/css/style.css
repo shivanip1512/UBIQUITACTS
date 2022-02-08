@@ -164,3 +164,26 @@ table {
 .fa-user-edit {
 	color: #5F5F83;
 }
+
+.img-wrap {
+	position: relative;
+}
+
+.img-wrap .deleteImg {
+	position: absolute;
+	top: 322px;
+	left: 57%;
+	font-size: x-large;
+	z-index: 100;
+	color: #6D7DB2;
+	-webkit-text-stroke-width: 0.5px;
+	-webkit-text-stroke-color: snow;
+}
+
+.deleteImg:hover {
+	color: red !important;
+}
+
+a:hover {
+	color: dimgrey;
+}
