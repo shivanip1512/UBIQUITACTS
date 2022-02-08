@@ -20,11 +20,12 @@
 						th:src="@{'/images/contact/'+${user.imageUrl}}"> <img
 						th:unless="${user.imageUrl}" class="contacts_photo profile_view"
 						alt="profile photo" src="/images/default_profile_photo.png">
+						<h2 class="mt-2" th:text="${user.name}"></h2>
 					<table class="table user_details mt-3">
 						<tbody>
 							<tr>
 								<td scope="row"><b>USERID#</b></td>
-								<td th:text="${user.id}"></td>
+								<th th:text="${user.role.split('_')[1]+'@'+user.id}"></th>
 							</tr>
 							<tr>
 								<td scope="row"><b>Email</b></td>
