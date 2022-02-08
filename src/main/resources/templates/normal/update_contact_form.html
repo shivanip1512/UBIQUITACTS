@@ -11,20 +11,28 @@
 
 		<div class="card user_section">
 			<div class="card-body">
-				<img style="width: 50px" class="mx-auto d-block"
-					src="/images/add-contact.png">
 
 				<div th:replace="alert::alertSection"></div>
 
-				<h1 class="text-center">Add Contact</h1>
-				<div class="container-fluid mt-4">
+				<div class="container-fluid container text-center">
+					<h3 class="text-center">Edit Contact</h3>
 					<div class="row">
 						<div class="col-md-8 offset-md-2">
 							<form action="#" th:object="${contact}"
 								enctype="multipart/form-data" method="post"
-								th:action="@{/user/process-contact}" class="mt-2">
+								th:action="@{/user/update-process-contact}">
+
+								<img th:if="${contact.image}" alt="profile photo"
+									class="contacts_photo" style="width: 55px; height: 55px;"
+									th:src="@{'/images/contact/'+${contact.image}}"> <img
+									th:unless="${contact.image}" alt="profile photo"
+									class="contacts_photo mb-3 mt-1"
+									style="width: 55px; height: 55px;"
+									src="/images/default_profile_photo.png">
+
 
 								<div th:replace="normal/contact_form::contactFormSection"></div>
+								<input th:value="${contact.cId}" type="hidden" name="cId">
 
 								<!-- save contact  -->
 								<div class="container text-center mb-4">

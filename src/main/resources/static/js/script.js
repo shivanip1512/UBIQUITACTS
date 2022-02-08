@@ -43,3 +43,7 @@ const deleteContact = (cId) => {
 		});
 }
 
+
+const updateContact = (cId) => {
+	window.location = "/user/update-contact/" + cId;
+}

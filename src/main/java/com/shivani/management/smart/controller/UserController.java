@@ -1,6 +1,7 @@
 package com.shivani.management.smart.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -75,20 +76,10 @@ public class UserController {
 			Model model, Principal principal, HttpSession httpSession) {
 		try {
 
-			System.out.println("contact : " + contact);
+//			System.out.println("contact : " + contact);
 			User user = (User) model.getAttribute("user");
 
-			/* processing and uploading file */
-			if (!file.isEmpty()) {
-				String imgName = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()) + "_"
-						+ file.getOriginalFilename();
-				;
-				contact.setImage(imgName);
-				File saveFile = new ClassPathResource("static/images/contact/").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + imgName);
-				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				System.out.println("Image uploaded..");
-			}
+			addContactProfilePhoto(contact, file);
 
 			// bidirectional mapping
 			user.getContacts().add(contact);
@@ -113,6 +104,20 @@ public class UserController {
 		return "normal/add_contact_form";
 	}
 
+	private void addContactProfilePhoto(Contact contact, MultipartFile file) throws IOException {
+		/* processing and uploading file */
+		if (!file.isEmpty()) {
+			String imgName = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()) + "_"
+					+ file.getOriginalFilename();
+			;
+			contact.setImage(imgName);
+			File saveFile = new ClassPathResource("static/images/contact/").getFile();
+			Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + imgName);
+			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			System.out.println("Image uploaded..");
+		}
+	}
+
 	@GetMapping("/show-contacts/{page}")
 	public String showContactsHandler(@PathVariable("page") Integer page, Model model) {
 		model.addAttribute("pageTitle", "Contacts");
@@ -135,7 +140,7 @@ public class UserController {
 
 	@GetMapping("/{cId}/contact-details")
 	public String showContactDetails(@PathVariable("cId") Integer cId, Model model) {
-		System.out.println("cid :" + cId);
+//		System.out.println("cid :" + cId);
 
 		User user = (User) model.getAttribute("user");
 
@@ -160,14 +165,10 @@ public class UserController {
 		User user = (User) model.getAttribute("user");
 		Contact contact = this.contactRepository.findById(cId).get();
 
-		System.out.println("user :" + user);
-		System.out.println("contact :" + contact);
-
-		boolean match = user.getContacts().stream().anyMatch(c -> contact.equals(c));
+		boolean match = isValidContactOfUser(user, contact);
 		if (match) {
 			// delete image of contact
-			
-			
+
 			// delete entry in db
 			contact.setUser(null);
 			this.contactRepository.delete(contact);
@@ -175,5 +176,47 @@ public class UserController {
 		}
 
 		return "redirect:/user/show-contacts/0";
+	}
+
+	private boolean isValidContactOfUser(User user, Contact contact) {
+		boolean match = false;
+		if (user != null && contact != null)
+			match = user.getContacts().stream().anyMatch(c -> contact.equals(c));
+		return match;
+	}
+
+	@GetMapping("/update-contact/{cId}")
+	public String updateContactHandler(@PathVariable("cId") Integer cId, Model model) {
+		model.addAttribute("pageTitle", "Edit Contact");
+		Contact contact = this.contactRepository.findById(cId).get();
+		System.out.println("contact fm update : " + contact);
+		model.addAttribute("contact", contact);
+		return "normal/update_contact_form";
+	}
+
+	@PostMapping("/update-process-contact")
+	public String updateContactProcessingHandler(@ModelAttribute Contact contact,
+			@RequestParam("profileImage") MultipartFile file, @RequestParam("cId") Integer cId, Model model,
+			HttpSession session) {
+		User user = (User) model.getAttribute("user");
+		System.out.println("user : " + user);
+
+		boolean isContactOfUser = isValidContactOfUser(user, contact);
+		System.out.println("isContactOfUser :" + isContactOfUser);
+		if (isContactOfUser) {
+		try {
+				addContactProfilePhoto(contact, file);
+				contact.setUser(user);
+				this.contactRepository.save(contact);
+				session.setAttribute("message", new Message("Contact Updated Successfully !", "alert-success"));
+			} catch (IOException e) {
+				System.out.println("ERROR : " + e.getMessage());
+				e.printStackTrace();
+				model.addAttribute("contact", contact);
+				session.setAttribute("message", new Message("Something went Wrong! " + e.getMessage(), "alert-danger"));
+			}
+		}
+
+		return "redirect:/user/" + contact.getcId() + "/contact-details";
 	}
 }

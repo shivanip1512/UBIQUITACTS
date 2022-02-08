@@ -10,6 +10,10 @@
 		<div class="card user_section">
 			<div class="card-body">
 				<div class="container text-center">
+
+					<div th:replace="alert::alertSection"></div>
+
+
 					<img th:if="${contact.image}"
 						class="contacts_photo profile_view mb-3" alt="profile photo"
 						th:src="@{'/images/contact/'+${contact.image}}"> <img
@@ -46,14 +50,15 @@
 							class="fas fa-quote-right"></i>
 					</div>
 					<div class="container text-center btn-group mt-3 contact_action">
-						<button type="submit" class="btn text-white "
+						<button type="submit" class="btn text-white"
+							th:onclick="|updateContact(${contact.cId})|"
 							style="background: #40bf80">Update</button>
-						<button type="reset"  th:onclick="|deleteContact(${contact.cId})|" class="btn bg-delete text-white resetBtn">Delete</button>
+						<button type="reset" th:onclick="|deleteContact(${contact.cId})|"
+							class="btn bg-delete text-white resetBtn">Delete</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
 </body>
 </html>

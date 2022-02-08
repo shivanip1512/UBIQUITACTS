@@ -47,7 +47,8 @@
 										<div class="container">
 											<a href="#" th:onclick="|deleteContact(${c.cId})|"
 												class="fas fa-trash-alt" style="margin-right: 6px;"></a> <a
-												class="fas fa-user-edit"></a>
+												class="fas fa-user-edit"
+												th:onclick="|updateContact(${c.cId})|"></a>
 										</div>
 									</td>
 								</tr>
