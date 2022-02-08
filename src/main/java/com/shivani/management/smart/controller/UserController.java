@@ -115,6 +115,24 @@ public class UserController {
 			Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + imgName);
 			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			System.out.println("Image uploaded..");
+		} 
+		//incase user has profile pic and he updates his profile
+		else if (contact.getImage() == null) {
+			String image = this.contactRepository.findById(contact.getcId()).get().getImage();
+			contact.setImage(image);
+		}
+	}
+
+	private void deleteContactProfilePhoto(Contact contact) throws IOException {
+		int id = contact.getcId();
+		Contact oldContact = this.contactRepository.findById(id).get();
+		/* deleting file */
+		if (oldContact.getImage() != null) {
+			File deleteFile = new ClassPathResource("static/images/contact/").getFile();
+			File file = new File(deleteFile, oldContact.getImage());
+			file.delete();
+			contact.setImage(null);
+			System.out.println("Image deleted..");
 		}
 	}
 
@@ -166,13 +184,20 @@ public class UserController {
 		Contact contact = this.contactRepository.findById(cId).get();
 
 		boolean match = isValidContactOfUser(user, contact);
-		if (match) {
-			// delete image of contact
-
-			// delete entry in db
-			contact.setUser(null);
-			this.contactRepository.delete(contact);
-			session.setAttribute("message", new Message("Contact deleted Successfully !", "alert-success"));
+		try {
+			if (match) {
+				// delete image of contact
+				deleteContactProfilePhoto(contact);
+				// delete entry in db
+				contact.setUser(null);
+				this.contactRepository.delete(contact);
+				session.setAttribute("message", new Message("Contact deleted Successfully !", "alert-success"));
+			}
+		} catch (IOException e) {
+			System.out.println("ERROR : " + e.getMessage());
+			e.printStackTrace();
+			model.addAttribute("contact", contact);
+			session.setAttribute("message", new Message("Something went Wrong! " + e.getMessage(), "alert-danger"));
 		}
 
 		return "redirect:/user/show-contacts/0";
@@ -189,7 +214,6 @@ public class UserController {
 	public String updateContactHandler(@PathVariable("cId") Integer cId, Model model) {
 		model.addAttribute("pageTitle", "Edit Contact");
 		Contact contact = this.contactRepository.findById(cId).get();
-		System.out.println("contact fm update : " + contact);
 		model.addAttribute("contact", contact);
 		return "normal/update_contact_form";
 	}
@@ -199,12 +223,11 @@ public class UserController {
 			@RequestParam("profileImage") MultipartFile file, @RequestParam("cId") Integer cId, Model model,
 			HttpSession session) {
 		User user = (User) model.getAttribute("user");
-		System.out.println("user : " + user);
 
 		boolean isContactOfUser = isValidContactOfUser(user, contact);
-		System.out.println("isContactOfUser :" + isContactOfUser);
 		if (isContactOfUser) {
-		try {
+			try {
+				deleteContactProfilePhoto(contact);
 				addContactProfilePhoto(contact, file);
 				contact.setUser(user);
 				this.contactRepository.save(contact);

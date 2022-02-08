@@ -23,7 +23,7 @@
 								th:action="@{/user/update-process-contact}">
 
 								<img th:if="${contact.image}" alt="profile photo"
-									class="contacts_photo" style="width: 55px; height: 55px;"
+									class="contacts_photo  mb-3 mt-1" style="width: 55px; height: 55px;"
 									th:src="@{'/images/contact/'+${contact.image}}"> <img
 									th:unless="${contact.image}" alt="profile photo"
 									class="contacts_photo mb-3 mt-1"
