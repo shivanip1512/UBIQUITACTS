@@ -46,6 +46,10 @@ const updateContact = (cId) => {
 	window.location = "/user/update-contact/" + cId;
 }
 
+const updateUserStatus = (id) =>{
+	window.location = "/user/update-account-status/"+id;
+}
+
 const deleteImg = (cId) => {
 
 	swal({

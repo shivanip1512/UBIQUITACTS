@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/userBase::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title></title>
+</head>
+<body>
+	<section>
+		<link rel="stylesheet" th:href="@{/css/toggle.css}" />
+
+		<div class="card user_section">
+			<div class="card-body">
+				<div class="container text-center">
+					<div th:replace="alert::alertSection"></div>
+					<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+
+					<img th:if="${user.imageUrl}"
+						class="contacts_photo profile_view mb-3" alt="profile photo"
+						th:src="@{'/images/contact/'+${user.imageUrl}}"> <img
+						th:unless="${user.imageUrl}" class="contacts_photo profile_view"
+						alt="profile photo" src="/images/default_profile_photo.png">
+					<table class="table user_details mt-3">
+						<tbody>
+							<tr>
+								<td scope="row"><b>USERID#</b></td>
+								<td th:text="${user.id}"></td>
+							</tr>
+							<tr>
+								<td scope="row"><b>Email</b></td>
+								<td th:text="${user.email}"></td>
+							</tr>
+							<tr>
+								<td scope="row"><b>Status</b></td>
+								<!-- <td th:text="${user.active?'Active':'Inactive'}"></td> -->
+								<td>
+									<div class="container">
+										<div class="row justify-content-md-center activeToggle">
+											<div class="col">Active</div>
+											<div class="col col-lg-4">
+												<div>
+													<input th:attr="checked=${user.active}?false:true" type="checkbox" id="switch" style="display: none;" /><label
+														th:onclick="|updateUserStatus(${user.id})|"
+														class="activeToggle" for="switch"></label>
+												</div>
+												
+											</div>
+											<div class="col">Inactive</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td scope="row"><b>About</b></td>
+								<td th:text="${user.about}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

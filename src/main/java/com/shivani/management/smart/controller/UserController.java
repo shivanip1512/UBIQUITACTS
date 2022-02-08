@@ -264,4 +264,27 @@ public class UserController {
 
 		return "redirect:/user/" + contact.getcId() + "/contact-details";
 	}
+
+	@GetMapping("/my-profile")
+	public String myProfileHandler(Model model) {
+		model.addAttribute("pageTitle", "My Profile");
+		return "normal/my_profile";
+	}
+
+	@GetMapping("/update-account-status/{id}")
+	public String updateUserAccountStatus(@PathVariable("id") Integer id, Model model,HttpSession session) {
+		User user = (User) model.getAttribute("user");
+		if (user.getId() == id) {
+			Boolean isActive = user.getActive();
+			user.setActive(toggleStatus(isActive));
+			this.userRepository.save(user);
+			System.out.println("Status toggled successfully...");
+			session.setAttribute("message", new Message("Status updated successfully !", "alert-success"));
+		}
+		return "redirect:/user/my-profile";
+	}
+
+	private Boolean toggleStatus(Boolean isActive) {
+		return isActive ? false : true;
+	}
 }

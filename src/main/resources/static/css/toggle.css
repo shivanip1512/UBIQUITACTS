@@ -1,0 +1,46 @@
+/* toggle in label designing */
+input[type=checkbox] {
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label.activeToggle {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 68px;
+	height: 26px;
+	background: #40bf80;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+.row.activeToggle>* {
+	padding-left: unset !important;
+	padding-right: unset !important;}
+
+label.activeToggle:after {
+	content: '';
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+input:checked+label.activeToggle {
+	background:#FF5733;
+}
+
+input:checked+label.activeToggle:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label.activeToggle:active:after {
+	width: 68px;
+}

@@ -131,6 +131,12 @@ table {
 	padding: unset;
 }
 
+.table.user_details {
+	margin-right: 25%;
+	margin-left: 36%;
+	width: 32% !important;
+}
+
 .contact_details td {
 	padding: unset !important;
 }
@@ -187,3 +193,15 @@ table {
 a:hover {
 	color: dimgrey;
 }
+
+/* toggle css */
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+	border-radius: 20px;
+	background: grey;
+}
+
+.toggle.ios .toggle-handle {
+	border-radius: 20px;
+}
+
+

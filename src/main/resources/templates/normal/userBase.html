@@ -26,8 +26,16 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- alert popup -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<!-- bootstrap toggle -->
+<link
+	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+	rel="stylesheet">
+<script
+	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <link rel="stylesheet" th:href="@{/css/style.css}" />
 <title th:text="${pageTitle}"></title>
 </head>
@@ -67,8 +75,8 @@
 	<div class="sidebar">
 		<i class="fas fa-times crossBtn" onclick="toggleSideBar()"></i> <a
 			th:href="@{/user/dashboard}" href="" class="item"><i
-			class="fas fa-home"></i> Home</a> <a href="#" class="item"><i
-			class="fas fa-user-circle"></i> My Profile</a> <a
+			class="fas fa-home"></i> Home</a> <a th:href="@{/user/my-profile}"
+			class="item"><i class="fas fa-user-circle"></i> My Profile</a> <a
 			th:href="@{/user/show-contacts/0}" class="item"><i
 			class="fas fa-id-card-alt"></i> View Contacts</a> <a
 			th:href="@{/user/add-contact}" href="" class="item"><i
