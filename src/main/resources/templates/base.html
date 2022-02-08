@@ -26,7 +26,7 @@
 <body>
 
 	<!-- navbar -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-light bg-primary">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-light bg-primary fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">UbiquiTACTS</a>
 			<button class="navbar-toggler" type="button"
@@ -51,11 +51,11 @@
 				</ul>
 			</div>
 
-			</ div>
+			</div>
 	</nav>
 	<!-- end of navbar -->
 
-	<div th:replace="${content}"></div>
+	<div th:insert="${content}"  style="margin-top: 4%;"></div>
 	<!-- Optional JavaScript; choose one of the two! -->
 
 	<!-- Option 1: Bootstrap Bundle with Popper -->

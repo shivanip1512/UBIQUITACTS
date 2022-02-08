@@ -12,21 +12,21 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 offset-md-3">
-					<div class="my-card">
+					<div class="my-card" style="padding: 18px;">
 
 						<div th:replace="alert::alertSection"></div>
 
 						<img style="width: 50px" class="mx-auto d-block"
 							src="/images/sign-up.png">
-						<h1 class="text-center">Signup here</h1>
+						<h2 class="text-center">Signup here</h2>
 
 						<form id="myform" action="" th:action="@{/do_register}"
 							method="post" th:object=${user}>
 
 							<!-- name field -->
-							<div class="mb-3">
-								<label for="name_field" class="form-label">Name</label> <input
-									type="text" class="form-control" id="name_field" name="name"
+							<div class="mb-2">
+								<label for="name_field">Name</label> <input type="text"
+									class="form-control" id="name_field" name="name"
 									th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
 									placeholder="Enter Full name" th:value="${user.name}"
 									required="required">
@@ -34,15 +34,15 @@
 									th:each="e : ${#fields.errors('name')}" th:text="${e}"></div>
 							</div>
 							<!-- email field -->
-							<div class="mb-3">
-								<label for="email_field" class="form-label">Email</label> <input
-									type="email" class="form-control" id="email_field" name="email"
+							<div class="mb-2">
+								<label for="email_field">Email</label> <input type="email"
+									class="form-control" id="email_field" name="email"
 									placeholder="Enter email-id" th:value="${user.email}"
 									required="required">
 							</div>
 							<!-- password field -->
-							<div class="mb-3">
-								<label for="password_field" class="form-label">Password</label>
+							<div class="mb-2">
+								<label for="password_field">Password</label>
 								<div class="input-group">
 									<input type="password" name="password" class="form-control"
 										id="password_field"
@@ -55,9 +55,17 @@
 										th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
 								</div>
 							</div>
+
+							<!-- contact image field -->
+							<div class="mb-2">
+								<label for="formFile">Profile Image</label> <input
+									class="form-control" type="file" id="formFile"
+									th:valuetype="${user.imageUrl}" name="profileImage">
+							</div>
+
 							<!-- user-about field -->
-							<div class="form-group mb-2">
-								<textarea rows="8" th:value="${user.about}" name="about"
+							<div class="form-group mb-1">
+								<textarea rows="5" th:value="${user.about}" name="about"
 									placeholder="Enter something about yourself"
 									th:text="${user.about}" class="form-control"></textarea>
 							</div>

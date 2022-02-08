@@ -190,8 +190,12 @@ public class UserController {
 				// delete image of contact
 				deleteContactProfilePhoto(contact);
 				// delete entry in db
-				contact.setUser(null);
-				this.contactRepository.delete(contact);
+				/*
+				 * contact.setUser(null); this.contactRepository.delete(contact);
+				 */
+				user.getContacts().remove(contact);
+				this.userRepository.save(user);
+
 				session.setAttribute("message", new Message("Contact deleted Successfully !", "alert-success"));
 			}
 		} catch (IOException e) {
